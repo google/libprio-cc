@@ -1,0 +1,59 @@
+// Copyright 2020 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto2";
+
+package private_statistics.prio.proto;
+
+import "prio/proto/algorithm_parameters.proto";
+
+option java_multiple_files = true;
+
+// Represents a batch of data share packets for the Prio algorithm, as
+// periodically released by an Ingestion server for downstream processing.
+// https://crypto.stanford.edu/prio/
+message PrioDataShareBatch {
+  // Universal unique identifier for this specific aggregation.
+  optional string batch_uuid = 1;
+  // A name for this specific aggregation.
+  optional string name = 2;
+  // Parameters for this Prio aggregation.
+  optional PrioAlgorithmParameters parameters = 3;
+  // The collection of individual data share packets
+  repeated PrioDataSharePacket packets = 4;
+  // Signature of ingestion server for verification purposes.
+  optional bytes signature_of_packets = 5;
+  // Some identifier as to which key was used to sign
+  optional string signature_id = 6;
+}
+
+// An individual data share packet ingested from a device participating in Prio.
+message PrioDataSharePacket {
+  // Universal unique identifier to link with data share sent to other server(s)
+  // participating in the aggregation.
+  optional string uuid = 1;
+  // The encrypted content of the data share algorithm
+  optional bytes encrypted_payload = 2;
+  // Encryption key identifier (e.g., to support key rotations)
+  optional string encryption_key_id = 3;
+  // The random value r_PIT to use for the Polynomial Identity Test.
+  optional bytes r_pit = 4;
+  // Version configuration hash of the device.
+  optional string version_configuration_hash = 5;
+  // Rolling random device identifier to prevent data pollution
+  // This would be populated only in cases where ingestion cannot fully
+  // address spam/abuse.
+  // This is *not* a permanent unique device identifier.
+  optional bytes device_nonce = 6;
+}
