@@ -273,7 +273,7 @@ absl::StatusOr<std::string> PrioEncryption::Encrypt(const PrioPublicKey &pk,
                   std::make_move_iterator(ciphertext.end())) +
       std::string(std::make_move_iterator(tag.begin()),
                   std::make_move_iterator(tag.end()));
-  return absl::Base64Escape(encrypted_payload);
+  return encrypted_payload;
 }
 
 absl::StatusOr<std::string> PrioEncryption::Decrypt(const PrioSecretKey &sk,
@@ -283,24 +283,20 @@ absl::StatusOr<std::string> PrioEncryption::Decrypt(const PrioSecretKey &sk,
   // for the ECDH key exchange, and mimicks
   //   tink/cc/aead/internal/cord_aes_gcm_boringssl.cc
   // for AES-GCM decryption.
-  std::string payload_decoded;
-  if (!absl::Base64Unescape(payload, &payload_decoded)) {
-    return absl::InvalidArgumentError("The payload cannot be decoded.");
-  }
-  if (payload_decoded.size() <
+  if (payload.size() <
       internal::kPublicKeyLength + internal::kTagLength) {
     return absl::InvalidArgumentError("The payload is invalid.");
   }
 
   // Parse the payload.
   std::string ephemeral_public_key(
-      payload_decoded.begin(),
-      payload_decoded.begin() + internal::kPublicKeyLength);
-  std::string ciphertext(payload_decoded.begin() + internal::kPublicKeyLength,
-                         payload_decoded.end() - internal::kTagLength);
+      payload.begin(),
+      payload.begin() + internal::kPublicKeyLength);
+  std::string ciphertext(payload.begin() + internal::kPublicKeyLength,
+                         payload.end() - internal::kTagLength);
   std::vector<uint8_t> tag(
-      payload_decoded.begin() + (payload_decoded.size() - internal::kTagLength),
-      payload_decoded.end());
+      payload.begin() + (payload.size() - internal::kTagLength),
+      payload.end());
 
   // Get elliptic curve group.
   PRIO_ASSIGN_OR_RETURN(bssl::UniquePtr<EC_GROUP> ec_group,

@@ -136,6 +136,11 @@ TEST(PrioEncryptionTest, InteroperabilityLibPrioRs) {
       "BNRzQ6TbqSc4pk0S8aziVRNjWm4DXQR5yCYTK2w22iSw4XAPW4OB9RxBpWVa1C/3ywVBT/"
       "3yLArOMXEsCEMOG1+d2CiEvtuU1zADH2MVaCnXL/dVXkDchYZsvPWPkDcjQA==";
 
+  // Decode the ciphertexts.
+  std::string encrypted_share1, encrypted_share2;
+  EXPECT_TRUE(absl::Base64Unescape(encrypted_share1_b64, &encrypted_share1));
+  EXPECT_TRUE(absl::Base64Unescape(encrypted_share2_b64, &encrypted_share2));
+
   // Parse the secret keys.
   PRIO_ASSERT_OK_AND_ASSIGN(
       auto sk1, PrioSecretKey::ParseFullKeyBase64(private_key1_b64));
@@ -144,9 +149,9 @@ TEST(PrioEncryptionTest, InteroperabilityLibPrioRs) {
 
   // Decrypt the shares.
   PRIO_ASSERT_OK_AND_ASSIGN(std::string share1_decrypted,
-                            PrioEncryption::Decrypt(sk1, encrypted_share1_b64));
+                            PrioEncryption::Decrypt(sk1, encrypted_share1));
   PRIO_ASSERT_OK_AND_ASSIGN(std::string share2_decrypted,
-                            PrioEncryption::Decrypt(sk2, encrypted_share2_b64));
+                            PrioEncryption::Decrypt(sk2, encrypted_share2));
 
   // Verify that the decryptions are correct.
   std::string share1_decoded, share2_decoded;
@@ -168,10 +173,13 @@ TEST(PrioEncryptionTest, InteroperabilityAppleCrypto) {
       "BLABoEXShyyRJYaXPmwseK2pVA5AoFgdilIlMb2QA3fquvQ3HWXq8LLG6d/"
       "d+7kDeF+ipKsyD8bqieC8JQTCrg2sQBxifQZpM3KG5kdh42VzA1o2DHQoo5nEJ5q0hQ==";
 
+  std::string encrypted_message;
+  EXPECT_TRUE(absl::Base64Unescape(encrypted_message_b64, &encrypted_message));
+
   PRIO_ASSERT_OK_AND_ASSIGN(auto sk,
                             PrioSecretKey::ParseFullKeyBase64(private_key_b64));
   PRIO_ASSERT_OK_AND_ASSIGN(std::string decrypted,
-                            PrioEncryption::Decrypt(sk, encrypted_message_b64));
+                            PrioEncryption::Decrypt(sk, encrypted_message));
 
   EXPECT_EQ(decrypted, plaintext);
 }

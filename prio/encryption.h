@@ -117,7 +117,7 @@ class PrioSecretKey {
 class PrioEncryption {
  public:
   // Static function to encrypt a non-empty payload, given an EC public key
-  // (X9.62 format). The output is encoded in basee 64.
+  // (X9.62 format).
   //
   // This function returns kInvalidArgument errors if the arguments are not
   // properly formatted, and may return kInternal errors if cryptographic errors
@@ -125,8 +125,7 @@ class PrioEncryption {
   static absl::StatusOr<std::string> Encrypt(const PrioPublicKey& pk,
                                              absl::string_view payload);
 
-  // Static function to decrypt an encrypted payload in base 64 with the secret
-  // key.
+  // Static function to decrypt an encrypted payload with the secret key.
   //
   // This function returns kInvalidArgument errors if the arguments are not
   // properly formatted, and may return kInternal errors if cryptographic errors

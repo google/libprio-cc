@@ -63,3 +63,11 @@ message CreatePacketsParameters {
   // Input data. Represented as an array of binary bits in an uint32 array.
   repeated uint32 data_bits = 3;
 }
+
+message Payload {
+  optional string uuid = 1;
+  optional string created = 2;
+  optional PrioAlgorithmParameters prio_params = 3;
+  optional int32 schema_version = 4;
+  optional CreatePacketsResponse packets_response = 5;
+}
