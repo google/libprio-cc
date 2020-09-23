@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef PRIVATE_ANALYTICS_PRIO_POLY_H_
-#define PRIVATE_ANALYTICS_PRIO_POLY_H_
+#ifndef LIBPRIO_CC_PRIO_POLY_H_
+#define LIBPRIO_CC_PRIO_POLY_H_
 
 #include <memory>
 #include <ostream>
@@ -97,4 +97,4 @@ class Poly {
 }  // namespace prio
 }  // namespace private_statistics
 
-#endif  // PRIVATE_ANALYTICS_PRIO_POLY_H_
+#endif  // LIBPRIO_CC_PRIO_POLY_H_

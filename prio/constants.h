@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef PRIVATE_ANALYTICS_PRIO_CONSTANTS_H_
-#define PRIVATE_ANALYTICS_PRIO_CONSTANTS_H_
+#ifndef LIBPRIO_CC_PRIO_CONSTANTS_H_
+#define LIBPRIO_CC_PRIO_CONSTANTS_H_
 
 #include "prio/types.h"
 
@@ -31,9 +31,7 @@ static const FieldElement kPrioGenerator = 3925978153;
 static const int kPrioNumRoots = 1 << 20;
 
 // Local differential privacy added before aggregation.
-// LINT.IfChange(default_epsilon)
 static const double kDefaultEpsilon = 12.0;
-// LINT.ThenChange(//depot/google3/third_party/private_statistics/prio/proto/algorithm_parameters.proto:default_epsilon)
 
 // Default number of servers.
 static const int kDefaultNumberOfServers = 2;
@@ -41,4 +39,4 @@ static const int kDefaultNumberOfServers = 2;
 }  // namespace prio
 }  // namespace private_statistics
 
-#endif  // PRIVATE_ANALYTICS_PRIO_CONSTANTS_H_
+#endif  // LIBPRIO_CC_PRIO_CONSTANTS_H_

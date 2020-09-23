@@ -80,15 +80,12 @@ absl::StatusOr<FieldElement> GenerateRandomFieldElement(FieldElement minimum,
   } else if (minimum == maximum) {
     return minimum;
   }
-  // LINT.IfChange
   uint32_t mask = internal::NextPowerTwoMinusOne<uint32_t>(maximum - minimum);
   uint32_t value = std::numeric_limits<uint32_t>::max();
   while (value > maximum - minimum) {
     RAND_bytes(reinterpret_cast<uint8_t*>(&value), sizeof(uint32_t));
     value &= mask;
   }
-  // LINT.ThenChange(//depot/google3/third_party/private_statistics/prio/types.h,
-  // //depot/google3/third_party/private_statistics/prio/finite_field.h)
   return minimum + value;
 }
 

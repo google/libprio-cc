@@ -14,20 +14,17 @@
  * limitations under the License.
  */
 
-#ifndef PRIVATE_ANALYTICS_PRIO_TYPES_H_
-#define PRIVATE_ANALYTICS_PRIO_TYPES_H_
+#ifndef LIBPRIO_CC_PRIO_TYPES_H_
+#define LIBPRIO_CC_PRIO_TYPES_H_
 
 #include <stdint.h>
 
 namespace private_statistics {
 namespace prio {
 
-// LINT.IfChange
 typedef uint32_t FieldElement;
-// LINT.ThenChange(//depot/google3/third_party/private_statistics/prio/finite_field.h,
-// //depot/google3/third_party/private_statistics/prio/finite_field.cc)
 
 }  // namespace prio
 }  // namespace private_statistics
 
-#endif  // PRIVATE_ANALYTICS_PRIO_TYPES_H_
+#endif  // LIBPRIO_CC_PRIO_TYPES_H_

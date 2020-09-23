@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef PRIVATE_ANALYTICS_PRIO_FINITE_FIELD_H_
-#define PRIVATE_ANALYTICS_PRIO_FINITE_FIELD_H_
+#ifndef LIBPRIO_CC_PRIO_FINITE_FIELD_H_
+#define LIBPRIO_CC_PRIO_FINITE_FIELD_H_
 
 #include <vector>
 
@@ -42,14 +42,9 @@ static inline FieldElement AddMod(FieldElement a, FieldElement b) {
 }
 
 static inline FieldElement MulMod(FieldElement a, FieldElement b) {
-  // LINT.IfChange
-  // Cast to uint64_t to add enough bit length for multiplication without
-  // overflow.
   uint64_t al = a;
   uint64_t bl = b;
   uint64_t p = al * bl;
-  // LINT.ThenChange(//depot/google3/third_party/private_statistics/prio/types.h,
-  // //depot/google3/third_party/private_statistics/prio/finite_field.cc)
   return p % kPrioModulus;
 }
 
@@ -71,4 +66,4 @@ absl::StatusOr<std::vector<FieldElement>> ConvertToFieldElements(
 }  // namespace prio
 }  // namespace private_statistics
 
-#endif  // PRIVATE_ANALYTICS_PRIO_FINITE_FIELD_H_
+#endif  // LIBPRIO_CC_PRIO_FINITE_FIELD_H_

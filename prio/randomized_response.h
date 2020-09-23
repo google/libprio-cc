@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef PRIVATE_ANALYTICS_PRIO_RANDOMIZED_RESPONSE_H_
-#define PRIVATE_ANALYTICS_PRIO_RANDOMIZED_RESPONSE_H_
+#ifndef LIBPRIO_CC_PRIO_RANDOMIZED_RESPONSE_H_
+#define LIBPRIO_CC_PRIO_RANDOMIZED_RESPONSE_H_
 
 #include "absl/status/statusor.h"
 #include "absl/types/span.h"
@@ -55,4 +55,4 @@ class Randomizer {
 }  // namespace prio
 }  // namespace private_statistics
 
-#endif  // PRIVATE_ANALYTICS_PRIO_RANDOMIZED_RESPONSE_H_
+#endif  // LIBPRIO_CC_PRIO_RANDOMIZED_RESPONSE_H_

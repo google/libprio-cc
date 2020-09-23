@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef PRIVATE_ANALYTICS_PRIO_TESTING_STATUS_MATCHERS_H_
-#define PRIVATE_ANALYTICS_PRIO_TESTING_STATUS_MATCHERS_H_
+#ifndef LIBPRIO_CC_PRIO_TESTING_STATUS_MATCHERS_H_
+#define LIBPRIO_CC_PRIO_TESTING_STATUS_MATCHERS_H_
 
 #include <gmock/gmock.h>
 #include "absl/status/status.h"
@@ -137,4 +137,4 @@ inline internal::StatusIsPoly StatusIs(
 }  // namespace prio
 }  // namespace private_statistics
 
-#endif  // PRIVATE_ANALYTICS_PRIO_TESTING_STATUS_MATCHERS_H_
+#endif  // LIBPRIO_CC_PRIO_TESTING_STATUS_MATCHERS_H_

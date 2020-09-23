@@ -234,6 +234,11 @@ cc_test(
 )
 
 cc_library(
+    name = "status_macros",
+    hdrs = ["status_macros.h"],
+)
+
+cc_library(
     name = "util",
     hdrs = ["util.h"],
     deps = [
@@ -243,11 +248,6 @@ cc_library(
         "@com_google_absl//absl/status",
         "@com_google_absl//absl/status:statusor",
     ],
-)
-
-cc_library(
-    name = "status_macros",
-    hdrs = ["status_macros.h"],
 )
 
 cc_test(

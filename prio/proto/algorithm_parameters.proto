@@ -23,9 +23,7 @@ message PrioAlgorithmParameters {
   // Number of bins for this aggregation.
   optional int32 bins = 1;
 
-  // LINT.IfChange(default_epsilon)
   optional double epsilon = 2 [default = 12.0];
-  // LINT.ThenChange(//depot/google3/third_party/private_statistics/prio/constants.h:default_epsilon)
 
   // The value of prime p used in this aggregation. The prime needs to be
   // congruent to 1 modulo 2 * next_power_two(bins + 1) to support Fourier
@@ -33,9 +31,8 @@ message PrioAlgorithmParameters {
   // The aggregation will be performed modulo this prime number. Usually, the
   // is chosen large enough so that the aggregation happens over the integers.
   //
-  // LINT.IfChange
   optional uint64 prime = 3 [default = 4293918721];
-  // LINT.ThenChange(//depot/google3/third_party/private_statistics/prio/constants.h)
+
   // The number of servers that will be involved in the aggregation.
   //
   // Currently, the library only supports two servers.

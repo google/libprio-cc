@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef PRIVATE_ANALYTICS_PRIO_STATUS_MACROS_H_
-#define PRIVATE_ANALYTICS_PRIO_STATUS_MACROS_H_
+#ifndef LIBPRIO_CC_PRIO_STATUS_MACROS_H_
+#define LIBPRIO_CC_PRIO_STATUS_MACROS_H_
 
 // Helper macro that checks if the right hand side (rexpression) evaluates to a
 // StatusOr with Status OK, and if so assigns the value to the value on the left
@@ -48,4 +48,4 @@
     return status;                               \
   }
 
-#endif  // PRIVATE_ANALYTICS_PRIO_STATUS_MACROS_H_
+#endif  // LIBPRIO_CC_PRIO_STATUS_MACROS_H_

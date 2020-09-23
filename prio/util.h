@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef PRIVATE_ANALYTICS_PRIO_UTIL_H_
-#define PRIVATE_ANALYTICS_PRIO_UTIL_H_
+#ifndef LIBPRIO_CC_PRIO_UTIL_H_
+#define LIBPRIO_CC_PRIO_UTIL_H_
 
 #include <cstddef>
 #include <cstdint>
@@ -103,4 +103,4 @@ inline absl::StatusOr<size_t> SerializationLengthBytes(
 }  // namespace prio
 }  // namespace private_statistics
 
-#endif  // PRIVATE_ANALYTICS_PRIO_UTIL_H_
+#endif  // LIBPRIO_CC_PRIO_UTIL_H_

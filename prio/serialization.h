@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef PRIVATE_ANALYTICS_PRIO_SERIALIZATION_H_
-#define PRIVATE_ANALYTICS_PRIO_SERIALIZATION_H_
+#ifndef LIBPRIO_CC_PRIO_SERIALIZATION_H_
+#define LIBPRIO_CC_PRIO_SERIALIZATION_H_
 
 #include "absl/status/statusor.h"
 #include "prio/data.h"
@@ -68,4 +68,4 @@ absl::StatusOr<PrioDataAndProofShare> DeserializeShare(
 }  // namespace prio
 }  // namespace private_statistics
 
-#endif  // PRIVATE_ANALYTICS_PRIO_SERIALIZATION_H_
+#endif  // LIBPRIO_CC_PRIO_SERIALIZATION_H_

@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef PRIVATE_ANALYTICS_PRIO_ENCRYPTION_H_
-#define PRIVATE_ANALYTICS_PRIO_ENCRYPTION_H_
+#ifndef LIBPRIO_CC_PRIO_ENCRYPTION_H_
+#define LIBPRIO_CC_PRIO_ENCRYPTION_H_
 
 #include <string>
 #include <vector>
@@ -137,4 +137,4 @@ class PrioEncryption {
 }  // namespace prio
 }  // namespace private_statistics
 
-#endif  // PRIVATE_ANALYTICS_PRIO_ENCRYPTION_H_
+#endif  // LIBPRIO_CC_PRIO_ENCRYPTION_H_

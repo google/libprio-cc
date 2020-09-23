@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef PRIVATE_ANALYTICS_PRIO_TESTING_SIMPLIFIED_SERVER_H_
-#define PRIVATE_ANALYTICS_PRIO_TESTING_SIMPLIFIED_SERVER_H_
+#ifndef LIBPRIO_CC_PRIO_TESTING_SIMPLIFIED_SERVER_H_
+#define LIBPRIO_CC_PRIO_TESTING_SIMPLIFIED_SERVER_H_
 
 #include <utility>
 
@@ -96,4 +96,4 @@ class SimplifiedServer {
 }  // namespace prio
 }  // namespace private_statistics
 
-#endif  // PRIVATE_ANALYTICS_PRIO_TESTING_SIMPLIFIED_SERVER_H_
+#endif  // LIBPRIO_CC_PRIO_TESTING_SIMPLIFIED_SERVER_H_

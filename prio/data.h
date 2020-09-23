@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef PRIVATE_ANALYTICS_PRIO_DATA_H_
-#define PRIVATE_ANALYTICS_PRIO_DATA_H_
+#ifndef LIBPRIO_CC_PRIO_DATA_H_
+#define LIBPRIO_CC_PRIO_DATA_H_
 
 #include <stdint.h>
 
@@ -58,4 +58,4 @@ struct PrioDataAndProofShare {
 }  // namespace prio
 }  // namespace private_statistics
 
-#endif  // PRIVATE_ANALYTICS_PRIO_DATA_H_
+#endif  // LIBPRIO_CC_PRIO_DATA_H_

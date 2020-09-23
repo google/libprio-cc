@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef PRIVATE_ANALYTICS_PRIO_TESTING_KEYS_H_
-#define PRIVATE_ANALYTICS_PRIO_TESTING_KEYS_H_
+#ifndef LIBPRIO_CC_PRIO_TESTING_KEYS_H_
+#define LIBPRIO_CC_PRIO_TESTING_KEYS_H_
 
 #include <array>
 
@@ -79,4 +79,4 @@ mqgGmZe/Kyyk0B9mlYiLqHzH5E4G23wyHg==
 }  // namespace prio
 }  // namespace private_statistics
 
-#endif  // PRIVATE_ANALYTICS_PRIO_TESTING_KEYS_H_
+#endif  // LIBPRIO_CC_PRIO_TESTING_KEYS_H_

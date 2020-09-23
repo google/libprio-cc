@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef PRIVATE_ANALYTICS_PRIO_PRNG_SEEDED_PRNG_H_
-#define PRIVATE_ANALYTICS_PRIO_PRNG_SEEDED_PRNG_H_
+#ifndef LIBPRIO_CC_PRIO_PRNG_SEEDED_PRNG_H_
+#define LIBPRIO_CC_PRIO_PRNG_SEEDED_PRNG_H_
 
 #include <vector>
 
@@ -46,4 +46,4 @@ class SeededPrng {
 }  // namespace prio
 }  // namespace private_statistics
 
-#endif  // PRIVATE_ANALYTICS_PRIO_PRNG_SEEDED_PRNG_H_
+#endif  // LIBPRIO_CC_PRIO_PRNG_SEEDED_PRNG_H_

@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef PRIVATE_ANALYTICS_PRIO_CLIENT_H_
-#define PRIVATE_ANALYTICS_PRIO_CLIENT_H_
+#ifndef LIBPRIO_CC_PRIO_CLIENT_H_
+#define LIBPRIO_CC_PRIO_CLIENT_H_
 
 #include <string>
 #include <vector>
@@ -80,4 +80,4 @@ class Client {
 }  // namespace prio
 }  // namespace private_statistics
 
-#endif  // PRIVATE_ANALYTICS_PRIO_CLIENT_H_
+#endif  // LIBPRIO_CC_PRIO_CLIENT_H_
