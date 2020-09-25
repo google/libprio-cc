@@ -85,11 +85,16 @@ absl::StatusOr<std::vector<std::string>> CreateEncryptedShares(
   }
 
   // Create client's output.
-  auto client = Client::Create(params.prio_parameters(), public_keys);
+  absl::StatusOr<Client> status_or_client =
+      Client::Create(params.prio_parameters(), public_keys);
+  if (!status_or_client.ok()) {
+    return status_or_client.status();
+  }
+  Client client = std::move(status_or_client).value();
   std::vector<uint32_t> data_bits =
       std::vector<uint32_t>(std::make_move_iterator(params.data_bits().begin()),
                             std::make_move_iterator(params.data_bits().end()));
-  return client->ProcessInput(std::move(data_bits));
+  return client.ProcessInput(std::move(data_bits));
 }
 
 extern "C" jbyteArray
