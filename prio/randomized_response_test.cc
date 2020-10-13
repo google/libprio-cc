@@ -68,8 +68,8 @@ TEST(RandomizerTest, EpsilonMustBeNonNegative) {
 // Randomized response stays within bounds.
 TEST(ElementWiseRandomizedResponseTest, OutputStaysWithinBounds) {
   const int num_bins = 1000;
-  const double epsilon = 0;  // The bias will be 1/2, i.e., the output should be
-                             // randomized with probability 1/2.
+  const double epsilon = 0;  // The bias will be 1, i.e., the output should be
+                             // randomized with probability 1.
   PrioAlgorithmParameters algorithm_parameters =
       GetDefaultAlgorithmParameters();
   algorithm_parameters.set_bins(num_bins);
@@ -105,13 +105,13 @@ TEST(ElementWiseRandomizedResponseTest, OutputStaysWithinBounds) {
 
 TEST(ElementWiseRandomizedResponseTest, OutputHasRightDistribution) {
   const int num_bins = 1000;
-  for (double epsilon : {0.0, 1.0, 12.0}) {
+  for (double epsilon : {0.5, 1.0, 12.0}) {
     PrioAlgorithmParameters algorithm_parameters =
         GetDefaultAlgorithmParameters();
     algorithm_parameters.set_bins(num_bins);
     algorithm_parameters.set_epsilon(epsilon);
 
-    // The bias will be 1/(1+exp(epsilon)), i.e., so the output should be
+    // The bias will be 2/(1+exp(epsilon)), i.e., so the output should be
     // randomized with that probability. We generate num_bins samples, and
     // check that the result is smaller than 6 standard deviations away
     // from the mean.
@@ -119,7 +119,7 @@ TEST(ElementWiseRandomizedResponseTest, OutputHasRightDistribution) {
     // for which the confidence interval is [mean - 6*sigma, mean + 6*sigma]
     // with probability ~ 1 - 2^-29.
     // https://en.wikipedia.org/wiki/68%E2%80%9395%E2%80%9399.7_rule
-    double bias = 1.0 / (1.0 + std::exp(epsilon));
+    double bias = 2.0 / (1.0 + std::exp(epsilon));
     double stddev = std::sqrt(num_bins * bias * (1 - bias));
     // Create the randomizer.
     PRIO_ASSERT_OK_AND_ASSIGN(auto randomizer,
@@ -162,8 +162,8 @@ TEST(ElementWiseRandomizedResponseTest, OutputHasRightDistribution) {
 }
 
 TEST(KHotRandomizedResponseTest, OutputIsOneHot) {
-  const double epsilon = 0;  // The bias will be 1/2, i.e., the output should be
-                             // randomized with probability 1/2.
+  const double epsilon = 0;  // The bias will be 1, i.e., the output should be
+                             // randomized with probability 1.
   int32_t hamming_weight = 8;
 
   PrioAlgorithmParameters algorithm_parameters =
@@ -205,7 +205,7 @@ TEST(KHotRandomizedResponseTest, OutputHasRightDistributionForOneHot) {
   input[0] = 1;
 
   for (double epsilon :
-       {0.0, 1.0, 12.0}) {  // We will try several epsilon values.
+       {0.5, 1.0, 12.0}) {  // We will try several epsilon values.
     PrioAlgorithmParameters algorithm_parameters =
         GetDefaultAlgorithmParameters();
     algorithm_parameters.set_epsilon(epsilon);
@@ -215,7 +215,7 @@ TEST(KHotRandomizedResponseTest, OutputHasRightDistributionForOneHot) {
     PRIO_ASSERT_OK_AND_ASSIGN(auto randomizer,
                               Randomizer::Create(algorithm_parameters));
 
-    // The bias will be 1/(1+exp(epsilon)), i.e., so the output should be
+    // The bias will be 2/(1+exp(epsilon)), i.e., so the output should be
     // randomized with that probability. We generate num_samples samples, and
     // check that the result is smaller than 6 standard deviations away
     // from the mean.
@@ -223,7 +223,7 @@ TEST(KHotRandomizedResponseTest, OutputHasRightDistributionForOneHot) {
     // for which the confidence interval is [mean - 6*sigma, mean + 6*sigma]
     // with probability ~ 1 - 2^-29.
     // https://en.wikipedia.org/wiki/68%E2%80%9395%E2%80%9399.7_rule
-    double bias = 1.0 / (1.0 + std::exp(epsilon));
+    double bias = 2.0 / (1.0 + std::exp(epsilon));
     double stddev = std::sqrt(num_samples * bias * (1 - bias));
 
     double num_equal_samples = 0;

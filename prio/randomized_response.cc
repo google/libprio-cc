@@ -122,7 +122,7 @@ absl::StatusOr<std::vector<FieldElement>> Randomizer::RandomizeResponse(
         "the algorithm parameters.");
   }
 
-  double bias = 1.0 / (1.0 + std::exp(algorithm_parameters_.epsilon()));
+  double bias = 2.0 / (1.0 + std::exp(algorithm_parameters_.epsilon()));
 
   if (algorithm_parameters_.has_hamming_weight()) {
     // We generate another random "hamming_weight"-hot vector with probability

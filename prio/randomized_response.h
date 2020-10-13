@@ -26,7 +26,7 @@ namespace private_statistics {
 namespace prio {
 
 // This randomizer can be use to create randomized responses in [minimum,
-// maximum] with bias = 1 / (1 + exp(epsilon)).
+// maximum] with bias = 2 / (1 + exp(epsilon)).
 class Randomizer {
  public:
   // Create a randomizer: this factory function can fail with an invalid
@@ -36,9 +36,9 @@ class Randomizer {
 
   // Randomize the span `bins`. If algorithm parameters contains the
   // hamming_weight field, the input will be replaced with a random
-  // "hamming_weight"-hot vector with probability 1/(1+e^epsilon). Otherwise,
+  // "hamming_weight"-hot vector with probability 2/(1+e^epsilon). Otherwise,
   // each entry of the input will independently be replaced with a random bit
-  // with probability 1/(1+e^epsilon).
+  // with probability 2/(1+e^epsilon).
   //
   // Assumes that the structure of the input has already been verified (correct
   // length, inputs in the correct range, correct hamming weight if applicable).
