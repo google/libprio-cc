@@ -34,6 +34,7 @@ cc_library(
         "//prio/proto:sum_part_cc_proto",
         "//prio/proto:validity_batch_cc_proto",
         "@com_google_absl//absl/status",
+        "@com_google_absl//absl/status:statusor",
         "@com_google_absl//absl/strings",
     ],
 )

@@ -49,6 +49,9 @@ message CreatePacketsResponse {
   optional ResponseStatus response_status = 1;
 
   // A list of datashares to be dispatched to server(s).
+  // The first share should be dispatched to the server that will
+  // ultimately compute the final aggregation, and the remaining
+  // shares, the facilitators.
   repeated bytes share = 2;
 }
 

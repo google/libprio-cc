@@ -20,6 +20,7 @@
 #include <vector>
 
 #include "absl/status/status.h"
+#include "absl/status/statusor.h"
 #include <openssl/rand.h>
 #include "prio/constants.h"
 #include "prio/util.h"

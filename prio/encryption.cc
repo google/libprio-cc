@@ -202,6 +202,9 @@ absl::StatusOr<std::string> PrioEncryption::Encrypt(const PrioPublicKey &pk,
 
   // Generate an ephemeral key pair.
   bssl::UniquePtr<EC_KEY> ephemeral_key(EC_KEY_new());
+  if (nullptr == ephemeral_key) {
+    return absl::InternalError("Internal cryptographic error.");
+  }
   if (1 != EC_KEY_set_group(ephemeral_key.get(), ec_group.get())) {
     return absl::InternalError("EC_KEY_set_group failed");
   }
@@ -230,6 +233,9 @@ absl::StatusOr<std::string> PrioEncryption::Encrypt(const PrioPublicKey &pk,
   absl::string_view iv(kdf_output.data() + internal::kAesKeyLength,
                        internal::kIvLength);
   bssl::UniquePtr<EVP_CIPHER_CTX> ctx(EVP_CIPHER_CTX_new());
+  if (nullptr == ctx) {
+    return absl::InternalError("Internal cryptographic error.");
+  }
   if (!EVP_EncryptInit_ex(ctx.get(), EVP_aes_128_gcm(), nullptr, nullptr,
                           nullptr)) {
     return absl::InternalError("Encryption init failed");
@@ -283,20 +289,17 @@ absl::StatusOr<std::string> PrioEncryption::Decrypt(const PrioSecretKey &sk,
   // for the ECDH key exchange, and mimicks
   //   tink/cc/aead/internal/cord_aes_gcm_boringssl.cc
   // for AES-GCM decryption.
-  if (payload.size() <
-      internal::kPublicKeyLength + internal::kTagLength) {
+  if (payload.size() < internal::kPublicKeyLength + internal::kTagLength) {
     return absl::InvalidArgumentError("The payload is invalid.");
   }
 
   // Parse the payload.
   std::string ephemeral_public_key(
-      payload.begin(),
-      payload.begin() + internal::kPublicKeyLength);
+      payload.begin(), payload.begin() + internal::kPublicKeyLength);
   std::string ciphertext(payload.begin() + internal::kPublicKeyLength,
                          payload.end() - internal::kTagLength);
   std::vector<uint8_t> tag(
-      payload.begin() + (payload.size() - internal::kTagLength),
-      payload.end());
+      payload.begin() + (payload.size() - internal::kTagLength), payload.end());
 
   // Get elliptic curve group.
   PRIO_ASSIGN_OR_RETURN(bssl::UniquePtr<EC_GROUP> ec_group,
@@ -319,6 +322,9 @@ absl::StatusOr<std::string> PrioEncryption::Decrypt(const PrioSecretKey &sk,
   absl::string_view iv(kdf_output.data() + internal::kAesKeyLength,
                        internal::kIvLength);
   bssl::UniquePtr<EVP_CIPHER_CTX> ctx(EVP_CIPHER_CTX_new());
+  if (nullptr == ctx) {
+    return absl::InternalError("Internal cryptographic error.");
+  }
   if (!EVP_DecryptInit_ex(ctx.get(), EVP_aes_128_gcm(), nullptr, nullptr,
                           nullptr)) {
     return absl::InternalError("Decryption init failed");
@@ -426,11 +432,19 @@ absl::StatusOr<PrioPublicKey> PrioPublicKey::ParsePemCertificate(
 
   // Extract the public key.
   bssl::UniquePtr<EVP_PKEY> evp_pkey(X509_get_pubkey(cert.get()));
+  if (evp_pkey == nullptr) {
+    return absl::InvalidArgumentError(
+        "PEM Certificate parsing failed: evp_pkey is null");
+  }
   bssl::UniquePtr<EC_KEY> ec_key(EVP_PKEY_get1_EC_KEY(evp_pkey.get()));
+  if (ec_key == nullptr) {
+    return absl::InvalidArgumentError(
+        "PEM Certificate parsing failed: ec_key is null");
+  }
   const EC_POINT *ec_point = EC_KEY_get0_public_key(ec_key.get());
   if (ec_point == nullptr) {
     return absl::InvalidArgumentError(
-        "PEM Certificate parsing failed: wrong key type?");
+        "PEM Certificate parsing failed: ec_point is null");
   }
 
   // Get elliptic curve group.
@@ -442,7 +456,9 @@ absl::StatusOr<PrioPublicKey> PrioPublicKey::ParsePemCertificate(
   if (pk == nullptr) {
     return absl::InternalError("Internal cryptographic error.");
   }
-  EC_POINT_copy(pk.get(), ec_point);
+  if (1 != EC_POINT_copy(pk.get(), ec_point)) {
+    return absl::InvalidArgumentError("Invalid EC point.");
+  }
   return PrioPublicKey(std::move(pk));
 }
 
@@ -460,17 +476,28 @@ absl::StatusOr<PrioSecretKey> PrioSecretKey::ParsePemKey(
   bssl::UniquePtr<EC_KEY> ec_key(PEM_read_bio_ECPrivateKey(
       ec_key_bio.get(), /*x=*/nullptr, /*cb=*/nullptr, /*u=*/nullptr));
   if (ec_key == nullptr) {
-    return absl::InvalidArgumentError("PEM Private Key parsing failed");
+    return absl::InvalidArgumentError("PEM EC Private Key parsing failed");
   }
 
   const BIGNUM *priv_key = EC_KEY_get0_private_key(ec_key.get());
   if (priv_key == nullptr) {
-    return absl::InvalidArgumentError("PEM Private Key parsing failed");
+    return absl::InvalidArgumentError("Getting ec_key failed");
   }
 
   // Copy the BIGNUM into the output.
   bssl::UniquePtr<BIGNUM> sk(BN_new());
-  BN_copy(sk.get(), priv_key);
+  if (sk == nullptr) {
+    return absl::InternalError("Internal cryptographic error.");
+  }
+  if (nullptr == BN_copy(sk.get(), priv_key)) {
+    return absl::InvalidArgumentError("Invalid scalar.");
+  }
+
+  if (BN_num_bytes(sk.get()) > 32) {
+    return absl::InvalidArgumentError(
+        absl::StrCat("The scalar has too many bytes, ", BN_num_bytes(sk.get()),
+                     ", instead of 32."));
+  }
   return PrioSecretKey(std::move(sk));
 }
 
@@ -505,6 +532,9 @@ absl::StatusOr<PrioSecretKey> PrioSecretKey::ParseScalar(
   bssl::UniquePtr<BIGNUM> priv_key(
       BN_bin2bn(reinterpret_cast<const uint8_t *>(scalar.data()), scalar.size(),
                 nullptr));
+  if (nullptr == priv_key) {
+    return absl::InvalidArgumentError("Could not parse the scalar.");
+  }
   return PrioSecretKey(std::move(priv_key));
 }
 

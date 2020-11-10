@@ -1,5 +1,12 @@
+package_group(
+    name = "visibility",
+    packages = [
+        "//prio/...",
+    ],
+)
+
 package(
-    default_visibility = ["//prio:__subpackages__"],
+    default_visibility = [":visibility"],
 )
 
 licenses(["notice"])
@@ -107,6 +114,7 @@ cc_test(
         "@boringssl//:ssl",
         "@com_github_google_glog//:glog",
         "@com_github_google_googletest//:gtest_main",
+        "@com_google_absl//absl/status",
         "@com_google_absl//absl/strings",
     ],
 )

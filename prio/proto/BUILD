@@ -2,7 +2,9 @@ load("@rules_cc//cc:defs.bzl", "cc_library")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 
 package(
-    default_visibility = ["//prio:__subpackages__"],
+    default_visibility = [
+        "//prio:visibility",
+    ],
 )
 
 licenses(["notice"])

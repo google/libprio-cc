@@ -17,6 +17,7 @@
 #include <iterator>
 
 #include "absl/status/status.h"
+#include "absl/status/statusor.h"
 #include "absl/strings/string_view.h"
 #include "prio/types.h"
 #include "prio/util.h"

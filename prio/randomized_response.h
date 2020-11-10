@@ -38,7 +38,7 @@ class Randomizer {
   // hamming_weight field, the input will be replaced with a random
   // "hamming_weight"-hot vector with probability 2/(1+e^epsilon). Otherwise,
   // each entry of the input will independently be replaced with a random bit
-  // with probability 2/(1+e^epsilon).
+  // with bias 2/(1+e^epsilon).
   //
   // Assumes that the structure of the input has already been verified (correct
   // length, inputs in the correct range, correct hamming weight if applicable).

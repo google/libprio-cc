@@ -20,6 +20,7 @@
 #include <limits>
 
 #include "absl/status/status.h"
+#include "absl/status/statusor.h"
 #include <openssl/rand.h>
 #include "prio/finite_field.h"
 #include "prio/status_macros.h"
